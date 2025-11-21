@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>☆ news ☆</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, p, a {
+    font-family: Helvetica Neue, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    line-height: 2;
+    color: inherit;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  body.normal {
+    background-color: white;
+    color: black;
+  }
+
+  body.dark {
+    background-color: black;
+    color: white;
+  }
+
+  nav {
+    padding: 1.5em 1.5em 1em;
+    display: flex;
+    gap: 0.75em;
+    margin-bottom: 2em;
+    position: sticky;
+    top: 0;
+    background-color: inherit;
+    z-index: 10;
+  }
+
+  body.normal nav {
+    background-color: white;
+  }
+
+  body.dark nav {
+    background-color: black;
+  }
+
+  .container {
+    max-width: 100vw;
+    padding: 0 1.5em;
+  }
+
+  .latest {
+    font-size: 0.75rem;
+    margin-bottom: 0.625rem;
+    text-transform: uppercase;
+  }
+
+  /* Unified headline styles */
+  .headline {
+    margin: 1.25rem 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -0.0625rem;
+    line-height: 1.55;
+    display: none; /* Start hidden */
+    font-size: 2rem;
+  }
+
+  /* Blink animation keyframes */
+  @keyframes blink {
+    from, to {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Apply blinking on hover for headlines */
+  .headline:hover {
+    animation: blink 0.333s step-end infinite;
+  }
+
+  /* Responsive styles for mobile */
+  @media only screen and (max-width: 767px) {
+    nav {
+      display: flex;
+      flex-direction: row;
+      padding: 1.5em 1.5em 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 0 1.5em;
+    }
+
+    .article-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5em;
+      width: 100%;
+    }
+
+    /* Make all headlines full width with smaller font size for mobile */
+    .headline {
+      width: 100%;
+      font-size: 1.35rem;
+    }
+
+    .article-section img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  /* Customize text selection to have black background with white text */
+  *::selection {
+    background-color: black;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="file:///Users/Guest/Downloads/hammer%20pages/hammer%20HOME%202.html" class="navbar-link">home</a>
+  <a href="file:///Users/Guest/Downloads/hammer%20pages/hammer%20NEWS%202.html" class="loading-link"><b>news</b></a>
+  <div id="datetime"></div>
+  <a href="#" id="modeToggleLink">dark mode</a>
+</nav>
+<div class="container">
+  <!-- <div class="latest"><u>Latest Headlines</u></div> -->
+
+  <!-- All headlines now use class 'headline' for uniform styling and spacing -->
+  <h1 class="headline">Fakemink goes live on IG to address Nettspend controversy</h1>
+ <h2 class="headline">Miu Miu debuts its spring 2026 collection amid Paris Fashion Week</h2>
+ <h2 class="headline">Playboi Carti's Antagonist tour officially starts</h2> <!-- 𝒫ℒ𝒜𝒴ℬ𝒪ℐ -->
+ <h2 class="headline">My Chemical Romance returning to Los Angeles with three-night Hollywood Bowl run</h2>
+ <h2 class="headline">Coperni is expanding into beauty with probiotic-infused athleisure</h2>
+  <h2 class="headline">Private Data from Gucci, Balenciaga, and McQueen Compromised in Cyberattack</h2>
+  <h2 class="headline">mechatok x ln-cc limited edition wide awake merchandise out now</h2>
+  <h2 class="headline">Darren Shooter takes on new role as VP of Design at Tommy Jeans</h2>
+  <h2 class="headline">Diet Prada celebrates 10 years at The Times Square EDITION</h2>
+  <h2 class="headline">SSENSE Seeks Bankruptcy Protection as Luxury E-Commerce Vaccilates</h2>
+  <h2 class="headline">Twitter’s Iconic Bird Sign Sells for Nearly $35,000 at Auction</h2>
+  <h2 class="headline">JT Premieres "Ran Out" Video by indiana420bitch</h2>
+  <h2 class="headline">Google Agrees to Buy Cloud Security Firm Wiz for $32 Billion</h2>
+  <!-- Optional: uncomment if needed -->
+  <!-- <h1 class="bottom-headline">MORE NEWS TO COME...</h1> -->
+  <p class="bottom-subtext">© 2025 hammer mag</p>
+</div>
+
+<footer class="footer"></footer>
+
+<script>
+  const modeToggleLink = document.getElementById('modeToggleLink');
+
+  modeToggleLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.body.classList.toggle('dark');
+    document.body.classList.toggle('normal');
+    modeToggleLink.textContent = document.body.classList.contains('dark') ? 'normal mode' : 'dark mode';
+  });
+
+  if(localStorage.getItem('mode') === 'dark') {
+    document.body.classList.add('dark');
+    document.body.classList.remove('normal');
+    modeToggleLink.textContent = 'normal mode';
+  } else {
+    document.body.classList.add('normal');
+    document.body.classList.remove('dark');
+    modeToggleLink.textContent = 'dark mode';
+  }
+
+  function updateDateTime() {
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const options = {
+      timeZone: userTimeZone,
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    };
+    const currentDateTime = new Date().toLocaleString('en-US', options);
+    document.getElementById('datetime').innerText = currentDateTime;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+
+  const loadingLinks = document.querySelectorAll('.loading-link');
+  loadingLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      document.body.classList.add('loading-link-style');
+      const targetURL = this.getAttribute('href');
+      setTimeout(() => {
+        window.location.href = targetURL;
+      }, 500);
+    });
+  });
+
+  // Reveal headlines after page load
+  function revealHeadlines() {
+    const headlines = document.querySelectorAll('.headline');
+    headlines.forEach((headline, index) => {
+      setTimeout(() => {
+        headline.style.display = 'block'; // Show the headline
+      }, index * 777); // Delay for each
+    });
+  }
+
+  window.onload = function() {
+    revealHeadlines();
+  };
+</script>
+</body>
+</html>
