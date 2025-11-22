@@ -28,6 +28,16 @@
             display: inline-block;
             vertical-align: top;
         }
+
+    #bottom-gif {
+    position: fixed;
+    bottom: 2em;           /* distance from bottom */
+    left: 50%;
+    transform: translateX(-50%) scale(0.25); /* center + shrink to 25% */
+    transform-origin: center;
+    z-index: 9999;
+    pointer-events: none;  /* optional: lets clicks pass through */
+}
     </style>
 </head>
 <body>
@@ -40,6 +50,8 @@
         Resolution: <span id="res">-</span><br>
         Mirror: <span id="mirror">on</span><br>
         <span id="other-info"></span>
+
+        <img id="bottom-gif" src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/hammercam.svg" alt="hammer gif">
     </div>
     <script src="lol.js"></script> <!-- hahahahaha -->
     <script>
