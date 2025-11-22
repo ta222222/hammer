@@ -9,17 +9,18 @@
             display: none; /* Hide the video element (used only for capturing frames) */
         }
         /* Info modal styling */
-        #info-modal {
-            display: inline-block;
-            padding: auto;
-            background: #ffffff;
-            color: #000000;
-            border-radius: 4px;
-            font-family: helvetica neue;
-            font-size: 0.75em;
-            min-width: 100px;
-            max-width: 150px;
-        }
+     #info-modal {
+    display: block;        /* makes it appear below */
+    margin: 0 1em;         /* aligns with dithered image’s margin */
+    margin-top: -0.5em;    /* optional fine-tuning */
+    background: #ffffff;
+    color: #000000;
+    border-radius: 4px;
+    font-family: helvetica neue;
+    font-size: 0.75em;
+    min-width: 100px;
+    max-width: 150px;
+}
         #dithered {
             height: 20em;
             margin: 1em;
