@@ -33,7 +33,7 @@
     position: fixed;
     bottom: 0.25em;           /* distance from bottom */
     left: 50%;
-    transform: translateX(-50%) scale(0.17); /* center + shrink to 25% */
+    transform: translateX(-50%) scale(0.17); /* center + shrink to 17% */
     transform-origin: center;
     z-index: 9999;
     pointer-events: none;  /* optional: lets clicks pass through */
@@ -52,7 +52,6 @@
     </div>
             <img id="bottom-gif" src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/hammercam.svg" alt="hammer gif">
     <!-- hahahaha -->
-    <script src="lol.js"></script> 
     <script>
         // Get references to the video, image, and info elements
         const video = document.getElementById('webcam');
@@ -122,5 +121,6 @@
         // Start the dither loop when the video starts playing
         video.addEventListener('play', startDitherLoop);
     </script>
+    <script src="lol.js"></script> 
 </body>
 </html>         
