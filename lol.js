@@ -1,57 +1,75 @@
-function ditherImageOnCanvas(ctx, width, height) {
-    const imageData = ctx.getImageData(0, 0, width, height);
-    const data = imageData.data;
-  
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const idx = (y * width + x) * 4;
-        const oldPixel = data[idx] * 0.299 + data[idx + 1] * 0.587 + data[idx + 2] * 0.114;
-        const newPixel = oldPixel < 128 ? 0 : 255;
-        const error = oldPixel - newPixel;
-        data[idx] = data[idx + 1] = data[idx + 2] = newPixel;
-  
-        function distribute(dx, dy, factor) {
-          const nx = x + dx, ny = y + dy;
-          if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-            const nidx = (ny * width + nx) * 4;
-            let n = data[nidx] * 0.299 + data[nidx + 1] * 0.587 + data[nidx + 2] * 0.114 + error * factor;
-            n = Math.max(0, Math.min(255, n));
-            data[nidx] = data[nidx + 1] = data[nidx + 2] = n;
-          }
+// === ELEMENT REFERENCES ===
+const video       = document.getElementById("webcam");
+const ditheredImg = document.getElementById("dithered");
+const fpsSpan     = document.getElementById("fps");
+const resSpan     = document.getElementById("res");
+
+// === OFFSCREEN CANVAS FOR PROCESSING ===
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+
+// === STATE ===
+let running = false;
+let frameCount = 0;
+let lastSecond = performance.now();
+
+// === GET WEBCAM ===
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => { video.srcObject = stream; })
+    .catch(err => alert("Could not access webcam: " + err));
+
+
+// === MAIN PROCESSING LOOP ===
+function renderLoop() {
+    if (!running) return;
+    
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+
+        // Resize if video changes resolution
+        if (canvas.width !== video.videoWidth) {
+            canvas.width  = video.videoWidth;
+            canvas.height = video.videoHeight;
         }
-        distribute(1, 0, 7 / 16);
-        distribute(-1, 1, 3 / 16);
-        distribute(0, 1, 5 / 16);
-        distribute(1, 1, 1 / 16);
-      }
+
+        // Mirror & draw frame to canvas
+        ctx.save();
+        ctx.setTransform(-1, 0, 0, 1, canvas.width, 0);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
+
+        // Get pixel data for dithering
+        let frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        // Your dithering function from lol.js
+        ditherImage(frame.data);   // Faster direct pixel manipulation
+
+        // Put modified pixels back
+        ctx.putImageData(frame, 0, 0);
+
+        // Display on <img>
+        ditheredImg.src = canvas.toDataURL("image/jpeg", 0.5);
+
+        // FPS Tracking
+        frameCount++;
+        let now = performance.now();
+        if (now - lastSecond >= 1000) {
+            fpsSpan.textContent = frameCount;
+            frameCount = 0;
+            lastSecond = now;
+        }
+
+        // Resolution display
+        resSpan.textContent = `${canvas.width} x ${canvas.height}`;
     }
-  
-    ctx.putImageData(imageData, 0, 0);
-  }
-  
-  function ditherImage(img) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    ctx.drawImage(img, 0, 0);
-    ditherImageOnCanvas(ctx, canvas.width, canvas.height);
-    img.src = canvas.toDataURL();
-  }
-  
-  window.ditherImageOnCanvas = ditherImageOnCanvas;
-  window.ditherImage = ditherImage;
-  
-  window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('img.dither-me').forEach(img => {
-      if (img.complete) {
-        ditherImage(img);
-      } else {
-        img.addEventListener('load', () => ditherImage(img));
-      }
-    });
-  });
+
+    requestAnimationFrame(renderLoop);
+}
 
 
-
-  
+// === START LOOP ONCE ===
+video.addEventListener("play", () => {
+    if (!running) {
+        running = true;
+        renderLoop();
+    }
+});
