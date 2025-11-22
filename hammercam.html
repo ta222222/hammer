@@ -31,9 +31,9 @@
 
     #bottom-gif {
     position: fixed;
-    bottom: 1em;           /* distance from bottom */
+    bottom: 0.5em;           /* distance from bottom */
     left: 50%;
-    transform: translateX(-50%) scale(0.25); /* center + shrink to 25% */
+    transform: translateX(-50%) scale(0.17); /* center + shrink to 25% */
     transform-origin: center;
     z-index: 9999;
     pointer-events: none;  /* optional: lets clicks pass through */
@@ -41,7 +41,6 @@
     </style>
 </head>
 <body>
-    hammercam v2 <!-- version two -->
     <video id="webcam" autoplay playsinline></video> <!-- Hidden video element for webcam stream -->
     <img id="dithered" alt="webcam will appear here" /> <!-- Image element to display the dithered result -->
     <div id="info-modal">
