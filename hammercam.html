@@ -18,7 +18,6 @@
     display: block;        /* makes it appear below */
     margin: 0 1em;         /* aligns with dithered image’s margin */
     /* margin-top: -0.5em;     optional fine-tuning */
-    vertical-align: top;
     background: #ffffff;
     color: #000000;
     border-radius: 4px;
@@ -47,9 +46,10 @@
 </head>
 <body>
     <video id="webcam" autoplay playsinline></video> <!-- Hidden video element for webcam stream -->
-    <img id="dithered" alt="hammercam will display here" /> <!-- Image element to display the dithered result -->
+    <img id="dithered" alt="" /> <!-- Image element to display the dithered result -->
     <div id="info-modal">
         <strong>Info</strong><br>
+        hammercam v2 [2025]
         Frame rate: <span id="fps">0</span> FPS<br>
         Resolution: <span id="res">-</span><br>
         Mirror: <span id="mirror">on</span><br>
