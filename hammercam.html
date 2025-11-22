@@ -8,6 +8,10 @@
         video {
             display: none; /* Hide the video element (used only for capturing frames) */
         }
+
+        body {
+            font-family: helvetica neue;
+        }
         /* Info modal styling */
      #info-modal {
     display: block;        /* makes it appear below */
@@ -41,7 +45,7 @@
 </head>
 <body>
     <video id="webcam" autoplay playsinline></video> <!-- Hidden video element for webcam stream -->
-    <img id="dithered" alt="webcam will display here" /> <!-- Image element to display the dithered result -->
+    <img id="dithered" alt="hammercam will display here" /> <!-- Image element to display the dithered result -->
     <div id="info-modal">
         <strong>Info</strong><br>
         Frame rate: <span id="fps">0</span> FPS<br>
