@@ -1,136 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>hammercam v2</title>
+    <meta charset="UTF-8"> <!-- Set character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the page responsive on all devices -->
+    <title>hammercam v2</title> <!-- The title shown in the browser tab -->
+    <style>
+        video {
+            display: none; /* Hide the video element (used only for capturing frames) */
+        }
+        /* Info modal styling */
+        #info-modal {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 2em;
+            padding: 1em 1.5em;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            border-radius: 8px;
+            font-family: helvetica neue;
+            font-size: 1em;
+            min-width: 200px;
+            max-width: 300px;
+        }
+        #dithered {
+            height: 20em;
+            margin: 1em;
+            display: inline-block;
+            vertical-align: top;
+        }
 
-<style>
-video { display: none; }
-
-#info-modal {
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 2em;
-    padding: 1em 1.5em;
-    background: rgba(0,0,0,0.8);
-    color: #fff;
-    border-radius: 8px;
-    font-family: helvetica neue;
-    font-size: 1em;
-    min-width: 200px;
-    max-width: 300px;
-}
-
-#dithered {
-    height: 20em;
-    margin: 1em;
-    display: inline-block;
-    vertical-align: top;
-}
-
-#bottom-gif {
+    #bottom-gif {
     position: fixed;
-    bottom: 0.25em;
+    bottom: 0.25em;           /* distance from bottom */
     left: 50%;
-    transform: translateX(-50%) scale(0.17);
+    transform: translateX(-50%) scale(0.17); /* center + shrink to 25% */
     transform-origin: center;
     z-index: 9999;
-    pointer-events: none;
+    pointer-events: none;  /* optional: lets clicks pass through */
 }
-</style>
+    </style>
 </head>
-
 <body>
-<video id="webcam" autoplay playsinline></video>
-<img id="dithered" alt="webcam will display here" />
+    <video id="webcam" autoplay playsinline></video> <!-- Hidden video element for webcam stream -->
+    <img id="dithered" alt="webcam will display here" /> <!-- Image element to display the dithered result -->
+    <div id="info-modal">
+        <strong>Info</strong><br>
+        Frame rate: <span id="fps">0</span> FPS<br>
+        Resolution: <span id="res">-</span><br>
+        Mirror: <span id="mirror">on</span><br>
+        <span id="other-info"></span>
+    </div>
+            <img id="bottom-gif" src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/hammercam.svg" alt="hammer gif">
+    <!-- hahahaha -->
+    <script src="lol.js"></script> 
+    <script>
+        // Get references to the video, image, and info elements
+        const video = document.getElementById('webcam');
+        const ditheredImg = document.getElementById('dithered');
+        const fpsSpan = document.getElementById('fps');
+        const resSpan = document.getElementById('res');
+        const mirrorSpan = document.getElementById('mirror');
+        const otherInfo = document.getElementById('other-info');
+        // Create a single offscreen canvas and image element for processing
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new window.Image();
+        let running = false; // Flag to ensure the loop starts only once
+        let lastFrameTime = performance.now();
+        let frameCount = 0;
+        let fps = 0;
 
-<div id="info-modal">
-    <strong>Info</strong><br>
-    Frame rate: <span id="fps">0</span> FPS<br>
-    Resolution: <span id="res">-</span><br>
-    Mirror: <span id="mirror">on</span><br>
-</div>
+        // Request access to the user's webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream; // Set the video source to the webcam stream
+            })
+            .catch(err => {
+                alert('Could not access webcam: ' + err); // Show an error if webcam access fails
+            });
 
-<img id="bottom-gif" src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/hammercam.svg">
+        // Function to start the real-time dither update loop
+        function startDitherLoop() {
+            if (running) return; // Prevent multiple intervals
+            running = true;
+            setInterval(() => {
+                // Only process if the video has enough data
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    // Resize the canvas if the video size changes
+                    if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                    }
+                    // Mirror the context horizontally before drawing
+                    ctx.save(); // Save the current context state
+                    ctx.setTransform(-1, 0, 0, 1, canvas.width, 0); // Flip horizontally
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height); // Draw the mirrored video frame
+                    ctx.restore(); // Restore the context to original state
+                    // When the image loads, apply the dither effect and update the display
+                    img.onload = function() {
+                        ditherImage(img); // ditherImage is defined in dither.js
+                        ditheredImg.src = img.src; // Show the dithered image
+                    };
+                    // Convert the canvas to a JPEG data URL for speed and set as image source
+                    img.src = canvas.toDataURL('image/jpeg', 0.5);
 
-<script src="lol.js"></script>
-
-<script>
-// Elements
-const video       = document.getElementById('webcam');
-const ditheredImg = document.getElementById('dithered');
-const fpsSpan     = document.getElementById('fps');
-const resSpan     = document.getElementById('res');
-
-// Canvas for processing
-const canvas = document.createElement('canvas');
-const ctx     = canvas.getContext('2d');
-
-// FPS tracking
-let lastSecond = performance.now();
-let frameCount = 0;
-let running    = false;
-
-// Get webcam
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => video.srcObject = stream)
-    .catch(err => alert('Could not access webcam: ' + err));
-
-// Main loop
-function loop() {
-    if (!running) return;
-
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
-
-        // Resize canvas if video dims changed
-        if (canvas.width !== video.videoWidth) {
-            canvas.width  = video.videoWidth;
-            canvas.height = video.videoHeight;
+                    // Update frame rate calculation
+                    frameCount++;
+                    const now = performance.now();
+                    if (now - lastFrameTime >= 1000) {
+                        fps = frameCount;
+                        frameCount = 0;
+                        lastFrameTime = now;
+                        fpsSpan.textContent = fps;
+                    }
+                    // Update resolution info
+                    resSpan.textContent = canvas.width + ' x ' + canvas.height;
+                }
+            }, 33); // Update at ~30 frames per second
         }
 
-        // Mirror + draw frame
-        ctx.save();
-        ctx.setTransform(-1, 0, 0, 1, canvas.width, 0);
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        ctx.restore();
-
-        // Get pixel data
-        let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-        // Apply your dithering directly to pixel data
-        ditherImage(imgData.data);   // <----- from lol.js
-
-        // Put modified pixels back
-        ctx.putImageData(imgData, 0, 0);
-
-        // Convert to JPEG fast & display
-        ditheredImg.src = canvas.toDataURL('image/jpeg', 0.5);
-
-        // FPS calc
-        frameCount++;
-        let now = performance.now();
-        if (now - lastSecond >= 1000) {
-            fpsSpan.textContent = frameCount;
-            frameCount = 0;
-            lastSecond = now;
-        }
-
-        resSpan.textContent = `${canvas.width} × ${canvas.height}`;
-    }
-
-    requestAnimationFrame(loop);
-}
-
-// Start once
-video.addEventListener('play', () => {
-    if (!running) {
-        running = true;
-        loop();
-    }
-});
-</script>
-
+        // Start the dither loop when the video starts playing
+        video.addEventListener('play', startDitherLoop);
+    </script>
 </body>
-</html>
-
+</html>         
