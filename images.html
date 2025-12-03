@@ -77,50 +77,13 @@
       padding: 0 1.5em;
     }
 
-    /* Responsive styles for mobile */
-    @media only screen and (max-width: 767px) {
-      nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.5em 1.5em 1em;
-      }
-
-      .container {
-        display: flex;
-        flex-direction: column;
-        padding: 0 1.5em;
-      }
-
-      .article-section img {
-        max-width: 100%;
-        height: auto;
-      }
-    }
-
-    @media only screen and (max-width: 320px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5em 1.5em 1em;
-      }
-    }
-
-    /* Customize text selection to have black background with white text */
-    *::selection {
-      background-color: red;
-      color: white;
-    }
-
     /* Centered image styling with bottom margin */
     .centered-image {
       width: 50%;
       height: 50%;
       display: block;
       margin: 0;
-      margin-bottom: .5em;
-      /* Adjust as needed for closer to bottom */
+      margin-bottom: 0.5em;
       margin-top: 1.5em;
     }
 
@@ -132,13 +95,9 @@
     .images-row {
       display: flex;
       flex-direction: row;
-      /* default, but explicit for clarity */
       gap: 1em;
-      /* space between images, adjust as needed */
       align-items: flex-start;
-      /* align items at the top */
       margin-top: 0.25em;
-      /* space above the images row */
     }
 
     .images-column {
@@ -163,38 +122,28 @@
     <a href="#" id="modeToggleLink">heated mode</a>
   </nav>
 
-
-
   <div class="container">
-    <!-- TOMMY JYRREL LNCC -->
+    <!-- Images -->
     <div class="images-row">
-      <img src="https://github.com/ta222222/hammer/blob/main/pix/IMG_2747.jpg?raw=true" class="centered-image" alt="IMG_2747" />
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/IMG_2747.jpg" class="centered-image" alt="IMG_2747" />
       <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0113%20copy%202.png" class="centered-image" alt="DSCN0113" />
     </div>
 
     <div class="images-row">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0114.JPG" class="centered-image" alt="DSCN0114" />
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0114.jpg" class="centered-image" alt="DSCN0114" />
     </div>
 
     <div class="images-column">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0111.JPG" class="centered-image" alt="DSCN0111" />
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0110.JPG" class="centered-image" alt="DSCN0110" />
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0111.jpg" class="centered-image" alt="DSCN0111" />
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0110.jpg" class="centered-image" alt="DSCN0110" />
     </div>
-
 
     <p class="bottom-subtext">© 2025 hammer mag</p>
 
-
-
-    <!-- TOMMY JYRREL LNCC -->
-
-
-
-
-
     <footer class="footer"></footer>
 
- <script>
+    <script>
+      // Mode toggle logic
       const modeToggleLink = document.getElementById('modeToggleLink');
 
       modeToggleLink.addEventListener('click', (e) => {
@@ -214,6 +163,7 @@
         modeToggleLink.textContent = 'heated mode';
       }
 
+      // Date/time update
       function updateDateTime() {
         const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const options = {
@@ -232,51 +182,37 @@
       setInterval(updateDateTime, 1000);
       updateDateTime();
 
+      // Loading links (if any)
       const loadingLinks = document.querySelectorAll('.loading-link');
       loadingLinks.forEach(link => {
-        link.addEventListener('click', function (event) {
+        link.addEventListener('click', (event) => {
           event.preventDefault();
           document.body.classList.add('loading-link-style');
-          const targetURL = this.getAttribute('href');
+          const targetURL = link.getAttribute('href');
           setTimeout(() => {
             window.location.href = targetURL;
           }, 500);
         });
       });
 
-      const span = document.getElementById('getintouch');
-      if (span) {
-        // Store the stylized text and the decoded text
-        const encoded = span.getAttribute('data-encoded');
-        const stylizedText = span.textContent;
-
-        span.addEventListener('mouseenter', () => {
-          // Show the decoded text
-          span.textContent = encoded;
-        });
-
-        span.addEventListener('mouseleave', () => {
-          // Revert to stylized text
-          span.textContent = stylizedText;
-        });
-      }
-
-      // Make page responsive for mobile screens
       function makeResponsive() {
         const isMobile = window.innerWidth <= 768;
         const imageRows = document.querySelectorAll('.images-row');
         const imageColumns = document.querySelectorAll('.images-column');
         const images = document.querySelectorAll('.centered-image');
 
+        // Adjust layout of rows
         imageRows.forEach(row => {
           row.style.flexDirection = isMobile ? 'column' : 'row';
           row.style.alignItems = isMobile ? 'stretch' : 'flex-start';
         });
 
+        // Adjust columns if needed
         imageColumns.forEach(col => {
           col.style.flexDirection = 'column';
         });
 
+        // Adjust images size
         images.forEach(img => {
           if (isMobile) {
             img.style.width = '100%';
@@ -295,6 +231,6 @@
 
       window.addEventListener('resize', makeResponsive);
     </script>
+  </div>
 </body>
-
 </html>
