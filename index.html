@@ -249,7 +249,7 @@
       headlines.forEach((headline, index) => {
         setTimeout(() => {
           headline.style.display = 'block'; // Show the headline
-        }, index * 666); // Delay for each
+        }, 1000 + index * 666); // Delay for each (ABOUT appears after 1 second)
       });
     }
 
