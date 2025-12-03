@@ -77,13 +77,50 @@
       padding: 0 1.5em;
     }
 
+     /* Responsive styles for mobile */
+    @media only screen and (max-width: 767px) {
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5em 1.5em 1em;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1.5em;
+      }
+
+      .article-section img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    @media only screen and (max-width: 320px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5em 1.5em 1em;
+      }
+    }
+
+    /* Customize text selection to have black background with white text */
+    *::selection {
+      background-color: red;
+      color: white;
+    }
+
     /* Centered image styling with bottom margin */
     .centered-image {
       width: 50%;
       height: 50%;
       display: block;
       margin: 0;
-      margin-bottom: 0.5em;
+      margin-bottom: .5em;
+      /* Adjust as needed for closer to bottom */
       margin-top: 1.5em;
     }
 
@@ -95,9 +132,13 @@
     .images-row {
       display: flex;
       flex-direction: row;
+      /* default, but explicit for clarity */
       gap: 1em;
+      /* space between images, adjust as needed */
       align-items: flex-start;
+      /* align items at the top */
       margin-top: 0.25em;
+      /* space above the images row */
     }
 
     .images-column {
