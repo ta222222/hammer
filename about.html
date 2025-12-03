@@ -169,15 +169,15 @@
     });
   });
 
-  // Reveal headlines after page load
-  function revealHeadlines() {
-    const headlines = document.querySelectorAll('.headline');
-    headlines.forEach((headline, index) => {
-      setTimeout(() => {
-        headline.style.display = 'block'; // Show the headline
-      }, index * 222); // Delay for each
-    });
-  }
+ // Reveal headlines after page load
+    function revealHeadlines() {
+      const headlines = document.querySelectorAll('.headline');
+      headlines.forEach((headline, index) => {
+        setTimeout(() => {
+          headline.style.display = 'block'; // Show the headline
+        }, 333 + index * 666); //
+      });
+    }
 
   window.onload = function() {
     revealHeadlines();
