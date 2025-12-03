@@ -1,267 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>☆ images ☆</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body, p, a {
-    font-family: Helvetica Neue, sans-serif;
-    margin: 0;
-    padding: 0;
-    font-size: 0.75rem;
-    line-height: 2;
-    color: inherit;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  body.normal {
-    background-color: white;
-    color: black;
-  }
-
-  body.heated {
-    background-color: red;
-    color: white;
-  }
-
-  nav {
-    padding: 1.5em 1.5em 1em;
-    display: flex;
-    gap: 0.75em;
-    margin-bottom: 1.5em;
-    position: sticky;
-    top: 0;
-    background-color: inherit;
-    z-index: 10;
-  }
-
-  body.normal nav {
-    background-color: white;
-  }
-
-  body.heated nav {
-    background-color: red;
-  }
-
-  .container {
-    max-width: 100vw;
-    padding: 0 1.5em;
-  }
-
-  .latest {
-    font-size: 0.75rem;
-    margin-bottom: 0.625rem;
-    text-transform: uppercase;
-  }
-
-  /* Unified headline styles */
-  .headline {
-    margin: 1.25rem 0;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: -0.0625rem;
-    line-height: 1.55;
-    display: none; /* Start hidden */
-    font-size: 2rem;
-  }
-
-  /* Blink animation keyframes */
-  @keyframes blink {
-    from, to {
-      opacity: 1;
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>☆ images ☆</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    50% {
-      opacity: 0;
+
+    body,
+    p,
+    a {
+      font-family: Helvetica Neue, sans-serif;
+      margin: 0;
+      padding: 0;
+      font-size: 0.75rem;
+      line-height: 2;
+      color: inherit;
+      text-decoration: none;
+      text-transform: uppercase;
     }
-  }
 
-  /* Apply blinking on hover for headlines */
-  .headline:hover {
-    animation: blink 0.333s step-end infinite;
-  }
+    body.normal {
+      background-color: white;
+      color: black;
+    }
 
-  /* Responsive styles for mobile */
-  @media only screen and (max-width: 767px) {
+    body.heated {
+      background-color: red;
+      color: white;
+    }
+
+    /* Ensure all text elements are white in heated mode */
+    body.heated,
+    body.heated *,
+    body.heated a,
+    body.heated button,
+    body.heated div,
+    body.heated p,
+    body.heated span {
+      color: white;
+    }
+
     nav {
+      padding: 1.5em 1.5em 1em;
       display: flex;
-      flex-direction: row;
-      padding: 1.5em 1.5em 0;
+      gap: 0.75em;
+      margin-bottom: 1.5em;
+      position: sticky;
+      top: 0;
+      background-color: inherit;
+      z-index: 10;
+    }
+
+    body.normal nav {
+      background-color: white;
+    }
+
+    body.heated nav {
+      background-color: red;
+    }
+
+    body.heated nav a,
+    body.heated nav button,
+    body.heated nav div {
+      color: white;
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
+      max-width: 100vw;
       padding: 0 1.5em;
     }
 
-    /* Make all headlines full width with smaller font size for mobile */
-    .headline {
-      width: 100%;
-      font-size: 1.35rem;
+    /* Responsive styles for mobile */
+    @media only screen and (max-width: 767px) {
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5em 1.5em 1em;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1.5em;
+      }
+
+      .article-section img {
+        max-width: 100%;
+        height: auto;
+      }
     }
 
-    .article-section img {
-      max-width: 100%;
-      height: auto;
+    @media only screen and (max-width: 320px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5em 1.5em 1em;
+      }
     }
-  }
 
-  /* Customize text selection to have black background with white text */
-  *::selection {
-    background-color: red;
-    color: white;
-  }
+    /* Customize text selection to have black background with white text */
+    *::selection {
+      background-color: red;
+      color: white;
+    }
 
-  /* Centered image styling with bottom margin */
-  .centered-image {
-    width: 50%;
-    height: 50%;
-    display: block;
-    margin: 0;
-    margin-bottom: .5em; /* Adjust as needed for closer to bottom */
-    margin-top: 1.5em;
-  }
+    /* Centered image styling with bottom margin */
+    .centered-image {
+      width: 50%;
+      height: 50%;
+      display: block;
+      margin: 0;
+      margin-bottom: .5em;
+      /* Adjust as needed for closer to bottom */
+      margin-top: 1.5em;
+    }
 
-  .images-row {
-  display: flex;
-  flex-direction: row; /* default, but explicit for clarity */
-  gap: 2em; /* space between images, adjust as needed */
-  align-items: flex-start; /* align items at the top */
-  margin-top: 0.25em; /* space above the images row */
-}
-</style>
-<style>
-  .bottom-subtext {
-    margin-top: 8em;
-    margin-bottom: 2em;
-  }
-</style>
+    /* Crosshair cursor on image hover */
+    img:hover {
+      cursor: crosshair;
+    }
+
+    .images-row {
+      display: flex;
+      flex-direction: row;
+      /* default, but explicit for clarity */
+      gap: 1em;
+      /* space between images, adjust as needed */
+      align-items: flex-start;
+      /* align items at the top */
+      margin-top: 0.25em;
+      /* space above the images row */
+    }
+
+    .images-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25em;
+      align-items: flex-start;
+    }
+
+    .bottom-subtext {
+      margin-top: 8em;
+      margin-bottom: 2em;
+    }
+  </style>
 </head>
+
 <body>
-<nav>
-  <a href="file:///Users/Guest/Downloads/hammer%20pages/hammer%20HOME%202.html" class="navbar-link">home</a>
-  <a href="file:///Users/Guest/Downloads/hammer%20pages/hammer%20IMAGES.html" class="navbar-link"><b>images</b></a>
-  <div id="datetime"></div>
-  <a href="#" id="modeToggleLink">heated mode</a>
-</nav>
-<div class="container">
+  <nav>
+    <a href="file:///Users/Guest/Downloads/hammer%20pages/hammer%20HOME%202.html" class="navbar-link">home</a>
+    <a href="file:///Users/Guest/Downloads/hammer%20pages/hammer%20IMAGES.html" class="navbar-link"><b>images</b></a>
+    <div id="datetime"></div>
+    <a href="#" id="modeToggleLink">heated mode</a>
+  </nav>
 
-  <div class="images-row">
-    <img src="https://i.ibb.co/PGyNzrZM/DSCN5309.jpg" class="centered-image"/>
-    <img src="https://i.ibb.co/Df9hRQF6/DSCN5321.jpg" class="centered-image"/>  
-    <img src="https://i.ibb.co/DHH3zK7P/DSCN3158.jpg" class="centered-image"/>
-   </div>
 
-   <div class="images-row">
-    <img src="https://i.ibb.co/rRCH0mFW/DSCN0460.jpg" class="centered-image"/>
-    <img src="https://64.media.tumblr.com/7994212da6573228699364b5de196ba6/bc9f9ea0c747160f-37/s2048x3072/6e3c8cd657a87e045f585dd92767f2daa4f2b582.jpg" class="centered-image"/>
-    <img src="https://64.media.tumblr.com/8cf982370f498396b58f6b7e6a3781f5/db4476354ad44e6d-29/s2048x3072/6e3be62e5e8c8c5d1211d5e2f7ce50d2d6315c81.jpg" class="centered-image"/>
 
- </div>
+  <div class="container">
+    <!-- TOMMY JYRREL LNCC -->
+    <div class="images-row">
+      <img src="https://github.com/ta222222/hammer/blob/main/pix/IMG_2747.jpg" class="centered-image" alt="IMG_2747" />
+      <img src="/Users/Guest/Documents/jyrrel/DSCN0113 copy 2.png" class="centered-image" alt="DSCN0113" />
+    </div>
 
-   <div class="images-row">
-    <img src="https://i.ibb.co/ccK8NKVR/DSCN2108.jpg" class="centered-image"/>
-    <img src="https://i.ibb.co/S43LsWSQ/DSCN2240.jpg" class="centered-image"/>
-    <img src="https://i.ibb.co/F4nxs6kw/DSCN0807.jpg" class="centered-image"/>
- </div>
-  
-  <div class="images-row">
-    <img src="https://i.ibb.co/XfKZ9T6R/DSCN3832.jpg" class="centered-image"/>
-    <img src="https://64.media.tumblr.com/27849a8497cccb2bdd44ce21d9276dbc/ef3fa8ab7a0db6ca-73/s2048x3072/2a119b3874d36fa50864c950b4cd286f21a10253.jpg" class="centered-image"/>
-    <img src="https://64.media.tumblr.com/318269677242d4e6d2700571d1ddb479/5fc1fbeaf4bacd62-f6/s2048x3072/aa1431adeeedf0265ff13539e448947646ed04ae.jpg" class="centered-image"/>    
-  </div>
+    <div class="images-row">
+      <img src="/Users/Guest/Documents/jyrrel/DSCN0114.JPG" class="centered-image" alt="DSCN0114" />
+    </div>
 
-  <div class="images-row">
-    <img src="https://i.ibb.co/F4d3mxr3/DSCN0346.jpg" class="centered-image"/>
-    <img src="https://i.ibb.co/zV8LfPDy/DSCN0782.jpg" class="centered-image"/>
-    <img src="https://i.ibb.co/svJCCX9B/DSCN1183.jpg" class="centered-image"/>   
-  </div>
+    <div class="images-column">
+      <img src="/Users/Guest/Documents/jyrrel/DSCN0111.JPG" class="centered-image" alt="DSCN0111" />
+      <img src="/Users/Guest/Documents/jyrrel/DSCN0110.JPG" class="centered-image" alt="DSCN0110" />
+    </div>
 
-  <div class="images-row">
-    <img src="https://i.ibb.co/Y7nWVvgq/DSCN0313.jpg" class="centered-image"/> 
-    <img src="https://i.ibb.co/DPRVqQgM/DSCN3201.jpg" class="centered-image"/>
-    <img src="https://i.ibb.co/Vch6G513/DSCN0031.jpg" class="centered-image"/>
-  </div>
 
-  <!--     <img src="https://64.media.tumblr.com/df24412fd27e2a98d4c37823fbadfa1f/41b9503540660042-6c/s2048x3072/25f86512be363afd2f070a3c5189e619a981b1d9.jpg" class="centered-image"/>   -->
-  <!-- Optional: your other content can go here -->
-  <p class="bottom-subtext">© 2025 hammer mag</p>
-</div>
+    <p class="bottom-subtext">© 2025 hammer mag</p>
 
-<footer class="footer"></footer>
 
-<script>
-  const modeToggleLink = document.getElementById('modeToggleLink');
 
-  modeToggleLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.body.classList.toggle('heated');
-    document.body.classList.toggle('normal');
-    modeToggleLink.textContent = document.body.classList.contains('heated') ? 'normal mode' : 'heated mode';
-  });
+    <!-- TOMMY JYRREL LNCC -->
 
-  if(localStorage.getItem('mode') === 'heated') {
-    document.body.classList.add('heated');
-    document.body.classList.remove('normal');
-    modeToggleLink.textContent = 'normal mode';
-  } else {
-    document.body.classList.add('normal');
-    document.body.classList.remove('heated');
-    modeToggleLink.textContent = 'heated mode';
-  }
 
-  function updateDateTime() {
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const options = {
-      timeZone: userTimeZone,
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    };
-    const currentDateTime = new Date().toLocaleString('en-US', options);
-    document.getElementById('datetime').innerText = currentDateTime;
-  }
-  setInterval(updateDateTime, 1000);
-  updateDateTime();
 
-  const loadingLinks = document.querySelectorAll('.loading-link');
-  loadingLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-      event.preventDefault();
-      document.body.classList.add('loading-link-style');
-      const targetURL = this.getAttribute('href');
-      setTimeout(() => {
-        window.location.href = targetURL;
-      }, 500);
-    });
-  });
 
-  // Reveal headlines after page load
-  function revealHeadlines() {
-    const headlines = document.querySelectorAll('.headline');
-    headlines.forEach((headline, index) => {
-      setTimeout(() => {
-        headline.style.display = 'block'; // Show the headline
-      }, index * 666); // Delay for each
-    });
-  }
 
-  window.onload = function() {
-    revealHeadlines();
-  };
-</script>
+    <footer class="footer"></footer>
+
+    <script>
+      const modeToggleLink = document.getElementById('modeToggleLink');
+
+      modeToggleLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.classList.toggle('heated');
+        document.body.classList.toggle('normal');
+        modeToggleLink.textContent = document.body.classList.contains('heated') ? 'normal mode' : 'heated mode';
+      });
+
+      if (localStorage.getItem('mode') === 'heated') {
+        document.body.classList.add('heated');
+        document.body.classList.remove('normal');
+        modeToggleLink.textContent = 'normal mode';
+      } else {
+        document.body.classList.add('normal');
+        document.body.classList.remove('heated');
+        modeToggleLink.textContent = 'heated mode';
+      }
+
+      function updateDateTime() {
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const options = {
+          timeZone: userTimeZone,
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        };
+        const currentDateTime = new Date().toLocaleString('en-US', options);
+        document.getElementById('datetime').innerText = currentDateTime;
+      }
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+
+      const loadingLinks = document.querySelectorAll('.loading-link');
+      loadingLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          document.body.classList.add('loading-link-style');
+          const targetURL = this.getAttribute('href');
+          setTimeout(() => {
+            window.location.href = targetURL;
+          }, 500);
+        });
+      });
+
+      const span = document.getElementById('getintouch');
+      if (span) {
+        // Store the stylized text and the decoded text
+        const encoded = span.getAttribute('data-encoded');
+        const stylizedText = span.textContent;
+
+        span.addEventListener('mouseenter', () => {
+          // Show the decoded text
+          span.textContent = encoded;
+        });
+
+        span.addEventListener('mouseleave', () => {
+          // Revert to stylized text
+          span.textContent = stylizedText;
+        });
+      }
+
+      // Make page responsive for mobile screens
+      function makeResponsive() {
+        const isMobile = window.innerWidth <= 768;
+        const imageRows = document.querySelectorAll('.images-row');
+        const imageColumns = document.querySelectorAll('.images-column');
+        const images = document.querySelectorAll('.centered-image');
+
+        imageRows.forEach(row => {
+          row.style.flexDirection = isMobile ? 'column' : 'row';
+          row.style.alignItems = isMobile ? 'stretch' : 'flex-start';
+        });
+
+        imageColumns.forEach(col => {
+          col.style.flexDirection = 'column';
+        });
+
+        images.forEach(img => {
+          if (isMobile) {
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            img.style.maxWidth = '100%';
+          } else {
+            img.style.width = '50%';
+            img.style.height = '50%';
+          }
+        });
+      }
+
+      window.onload = function () {
+        makeResponsive();
+      };
+
+      window.addEventListener('resize', makeResponsive);
+    </script>
 </body>
+
 </html>
