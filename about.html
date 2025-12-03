@@ -69,11 +69,11 @@
   /* Apply blinking on hover for other headlines if needed (not used here) */
   
     .headline {
-      animation: blink 0.75s step-end infinite;
+      animation: blink 1.25s step-end infinite;
     }
 
     .headline:hover {
-      animation: blink 0.333s step-end infinite;
+      animation: blink 0.5s step-end infinite;
     }
 
 
@@ -175,7 +175,7 @@
     headlines.forEach((headline, index) => {
       setTimeout(() => {
         headline.style.display = 'block'; // Show the headline
-      }, index * 666); // Delay for each
+      }, index * 333); // Delay for each
     });
   }
 
