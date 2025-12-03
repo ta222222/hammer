@@ -77,12 +77,18 @@
       padding: 0 1.5em;
     }
 
-    .full-image {
-        width: 100% !important;
-        height: auto !important;
-        max-width: 50vw !important;
+.full-image {
+  width: 100%;
+  margin: 1.5em 0;
+}
 
-      }
+.full-image img {
+  display: block;
+  width: 100%;      /* makes image fill container */
+  height: auto;     /* keeps aspect ratio */
+  max-width: 100%;  /* prevents shrinking on large screens */
+}
+
 
      /* Responsive styles for mobile */
     @media only screen and (max-width: 767px) {
