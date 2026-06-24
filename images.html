@@ -72,69 +72,30 @@
       color: white;
     }
 
-    .container {
+    /* Gallery wrapper: full-width, left-aligned, with uniform vertical spacing */
+    .gallery {
+      width: 100%;
       max-width: 100vw;
       padding: 0 1.5em;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
     }
 
-.full-image {
-  width: 100%;
-  margin: 1.5em 0;
-}
-
-.full-image img {
-  display: block;
-  width: 100%;      /* makes image fill container */
-  height: auto;     /* keeps aspect ratio */
-  max-width: 100%;  /* prevents shrinking on large screens */
-}
-
-
-     /* Responsive styles for mobile */
-    @media only screen and (max-width: 767px) {
-      nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.5em 1.5em 1em;
-      }
-
-      .container {
-        display: flex;
-        flex-direction: column;
-        padding: 0 1.5em;
-      }
-
-      .article-section img {
-        max-width: 100%;
-        height: auto;
-      }
+    /* A row holds one or more images that share the width evenly */
+    .images-row {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5em;
+      align-items: flex-start;
     }
 
-    @media only screen and (max-width: 320px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5em 1.5em 1em;
-      }
-    }
-
-    /* Customize text selection to have black background with white text */
-    *::selection {
-      background-color: red;
-      color: white;
-    }
-
-    /* Centered image styling with bottom margin */
-    .centered-image {
-      width: 50%;
-      height: 50%;
+    /* Desktop sizing: half-width images, matching the original layout */
+    .images-row img {
       display: block;
-      margin: 0;
-      margin-bottom: .5em;
-      /* Adjust as needed for closer to bottom */
-      margin-top: 1.5em;
+      width: 50%;
+      height: auto;
+      min-width: 0;
     }
 
     /* Crosshair cursor on image hover */
@@ -142,28 +103,50 @@
       cursor: crosshair;
     }
 
-    .images-row {
-      display: flex;
-      flex-direction: row;
-      /* default, but explicit for clarity */
-      gap: 1em;
-      /* space between images, adjust as needed */
-      align-items: flex-start;
-      /* align items at the top */
-      margin-top: 0.25em;
-      /* space above the images row */
-    }
-
-    .images-column {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25em;
-      align-items: flex-start;
+    /* Customize text selection to have red background with white text */
+    *::selection {
+      background-color: red;
+      color: white;
     }
 
     .bottom-subtext {
-      margin-top: 8em;
+      margin-top: 6em;
       margin-bottom: 2em;
+    }
+
+    /* Mobile: images span the full width of the viewport */
+    @media only screen and (max-width: 767px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .gallery {
+        max-width: 100%;
+        padding: 0;
+        gap: 1em;
+      }
+
+      .images-row {
+        flex-direction: column;
+        gap: 1em;
+      }
+
+      .images-row img {
+        width: 100%;
+      }
+
+      .bottom-subtext {
+        margin-top: 4em;
+        padding: 0 1.5em;
+      }
+    }
+
+    @media only screen and (max-width: 320px) {
+      nav {
+        align-items: center;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -177,44 +160,35 @@
   </nav>
 
 
-  <div class="container">
+  <div class="gallery">
     <div class="images-row">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG0278.webp" class="centered-image" alt="RIMG0728" />
-</div></div>
-    
-  <div class="container">
-    <!-- Images -->
-    <div class="images-row">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/IMG_2747.jpg" class="centered-image" alt="IMG_2747" />
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0113%20copy%202.png" class="centered-image" alt="DSCN0113" />
-</div></div>
-
-    <div class="images-row">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG1562.JPG" class="centered-image" alt="RIMG1562" />
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG0278.webp" alt="RIMG0278" />
     </div>
 
-      <div class="full-image">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/560.jpg" class="" alt="560" />
-
-    <div class="images-column">
-      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG0715.JPG" class="centered-image" alt="" />
-     <img src="" class="centered-image" alt="" />
+    <div class="images-row">
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/IMG_2747.jpg" alt="IMG_2747" />
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/DSCN0113%20copy%202.png" alt="DSCN0113" />
     </div>
 
-
-       <div class="full-image">
-             <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG1529.JPG" class="centered-image" alt="" />         
+    <div class="images-row">
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG1562.JPG" alt="RIMG1562" />
     </div>
-  
-<div class="images-column">
-      <img src="" class="centered-image" alt="" />
-     <img src="" class="centered-image" alt="" />
+
+    <div class="images-row">
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/560.jpg" alt="560" />
+    </div>
+
+    <div class="images-row">
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG0715.JPG" alt="RIMG0715" />
+    </div>
+
+    <div class="images-row">
+      <img src="https://raw.githubusercontent.com/ta222222/hammer/refs/heads/main/pix/RIMG1529.JPG" alt="RIMG1529" />
     </div>
 
     <p class="bottom-subtext">© 2025 hammer mag</p>
 
     <footer class="footer"></footer>
-
   </div>
 
     <script>
@@ -270,42 +244,6 @@
         });
       });
 
-      function makeResponsive() {
-        const isMobile = window.innerWidth <= 768;
-        const imageRows = document.querySelectorAll('.images-row');
-        const imageColumns = document.querySelectorAll('.images-column');
-        const images = document.querySelectorAll('.centered-image');
-
-        // Adjust layout of rows
-        imageRows.forEach(row => {
-          row.style.flexDirection = isMobile ? 'column' : 'row';
-          row.style.alignItems = isMobile ? 'stretch' : 'flex-start';
-        });
-
-        // Adjust columns if needed
-        imageColumns.forEach(col => {
-          col.style.flexDirection = 'column';
-        });
-
-        // Adjust images size
-        images.forEach(img => {
-          if (isMobile) {
-            img.style.width = '100%';
-            img.style.height = 'auto';
-            img.style.maxWidth = '100%';
-          } else {
-            img.style.width = '50%';
-            img.style.height = '50%';
-          }
-        });
-      }
-
-      window.onload = function () {
-        makeResponsive();
-      };
-
-      window.addEventListener('resize', makeResponsive);
     </script>
-  </div>
 </body>
 </html>
