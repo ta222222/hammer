@@ -414,7 +414,58 @@
 
     <footer class="footer"></footer>
     </div>
+<script id="random">
+  // random — randomize every individual gallery image on page load.
+  // Each image (including those that were paired in a two-image row) is
+  // treated as its own unit so the shuffle mixes them all independently.
+  (function random() {
+    function shuffleGallery() {
+      const gallery = document.querySelector('.gallery');
+      if (!gallery) return;
 
+      // Collect every individual image as a standalone unit
+      const imgs = Array.from(gallery.querySelectorAll('.images-row img'));
+
+      // Fisher–Yates shuffle on the individual images
+      for (let i = imgs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [imgs[i], imgs[j]] = [imgs[j], imgs[i]];
+      }
+
+      const bottomSubtext = gallery.querySelector('.bottom-subtext');
+
+      // Clear out the original rows before rebuilding
+      gallery.querySelectorAll('.images-row').forEach(row => row.remove());
+
+      // Rebuild: one image per row, but place two side by side every 6 images
+      let placed = 0;
+      let i = 0;
+      while (i < imgs.length) {
+        const row = document.createElement('div');
+        row.className = 'images-row';
+
+        if (placed > 0 && placed % 6 === 0 && i + 1 < imgs.length) {
+          row.appendChild(imgs[i]);
+          row.appendChild(imgs[i + 1]);
+          i += 2;
+          placed += 2;
+        } else {
+          row.appendChild(imgs[i]);
+          i += 1;
+          placed += 1;
+        }
+
+        gallery.insertBefore(row, bottomSubtext);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', shuffleGallery);
+    } else {
+      shuffleGallery();
+    }
+  })();
+</script>
     <script>
       // Mode toggle logic
       const modeToggleLink = document.getElementById('modeToggleLink');
